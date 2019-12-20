@@ -1,0 +1,146 @@
+<html>
+<head>
+<script type="text/javascript">
+<!--
+
+// glg_script.js contains the JS source code of the GLG script object that
+// provides convenience methods for communicating with the GLG JSP servlet.
+
+function OnLoad()
+{
+   gso.SetImageID( "process_image" );    // Image to receive servlet's output
+   gso.SetServletBase(site_url+"glg_process_alkhorayef" );  // Servlet URL's base
+   gso.SetIdleTimeout( 0 );      // Stop updates after 10 mins of inactivity
+   
+   gso.SetTooltipID( "tooltip_div", "tooltip_data" ); // Tooltip elements
+   gso.SetDialogID( "dialog_div", "dialog_data" ); // MouseClick dialog elements
+
+   // Two-stage dialog: the name of the object selected by MouseClick will 
+   // be used to request dialog data.
+   gso.SetTwoStageDialog( true );
+
+   // Specify a custom method for pre-processing returned click data
+   // before they are displayed in a dialog.
+   gso.SetClickDataCB( ProcessClickData );
+
+   // Start/Stop Updates buttons whose state will be updated by the 
+   // StartUpdates() and StopUpdates() methods.
+   //
+   // gso.SetStartButtonID( "start_updates" );
+   // gso.SetStopButtonID( "stop_updates" );
+
+   // Defines method that provides custom parameters to be sent to the servlet.
+   gso.SetCustomRequestParam( CustomRequestParam );
+
+   // Starts updates with the selected update interval.
+   ChangeUpdateInterval( 15000, true );
+   ChangeImageSize();
+}
+
+// Provides show_pipes and show_flow parameters to be appended to the 
+// servlet request.
+//
+function CustomRequestParam()
+{
+   return "&devId=" + process_devId + "&classId=" + process_classId;
+}
+
+function ChangeUpdateInterval( update_interval, update_now )
+{
+   gso.SetUpdateInterval( update_interval );
+   // update_now is false on load: image has already been loaded.
+   gso.StartUpdates( update_now );
+}
+
+function ChangeImageSize()
+{
+   gso.SetServletSize( 800, 600 );     // Set larger size      
+   gso.UpdateImage();
+}
+
+function OnMove( event )
+{
+   // Processes tooltip events and displays a tooltip.
+   gso.ProcessTooltip( event );
+}
+
+function OnClick( event )
+{
+   // Processes mouse click events to find selected object and display a
+   // dialog with detailed information.
+   //
+   gso.ProcessClick( event );
+}
+
+function ProcessClickData( responseText )
+{
+
+   // Check if user clicked on a button: if true, don't proceed to display 
+   // a dialog.
+   if( ProcessButtons( responseText ) )
+     return false;
+      
+   return true;
+}
+
+function ProcessButtons( selected_name )
+{
+   // Check if selected object is a button and handle the action.
+   if( selected_name == "3DPipesToggle" )
+   {
+      show_pipes = ( show_pipes == 0 ? 1 : 0 );
+      if( show_pipes == 0 )
+        show_flow = 1;       // Need at least one, show_pipes or show_flow.
+
+      gso.UpdateImage();
+      return true;
+   }
+   else if( selected_name == "FlowToggle" )
+   {
+      show_flow = ( show_flow == 0 ? 1 : 0 );
+      if( show_flow == 0 )
+        show_pipes = 1;       // Need at least one, show_pipes or show_flow.
+
+      gso.UpdateImage();
+      return true;
+   }
+   return false;   // Not a button.
+}
+
+//-->
+</script>
+</head>
+
+<body bgcolor=white style="font-family:Arial;">
+<img id="process_image" src="https://www.wellmonitor.net:8080/hmi/glg_process_alkhorayef?width=800&height=650" 
+      onclick="OnClick(event)" 
+      onmousemove="OnMove(event)" onmouseout="OnMove(null)" 
+      alt="Loading Image..."
+>
+
+<div id="dialog_div" onclick="gso.EraseDataDialog()"
+   style="position:absolute; display:none; top:200px; left:200px; 
+   z-index:10000;">
+<table style="background-color:black;">
+   <tr><td style="background-color:white;" >
+   <span id="dialog_data"> No Data </span>
+   <hr style="width: 100%; height: 2px;">
+   <input type="button" value="Close" onclick="gso.EraseDataDialog()" />
+   </td></tr>
+</table>
+</div>
+
+<div id="tooltip_div"
+   style="position:absolute; display:none; top:0px; left:0px; z-index:10000;">
+<table>
+   <tr><td id="tooltip_data"  
+       style="background-color:#ffffcc; border-radius: 6px; padding: 5px 5px;" >
+   Tooltip
+   </td></tr>
+</table>
+</div>
+
+<script> OnLoad(); </script>
+</body>
+</html>
+

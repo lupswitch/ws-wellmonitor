@@ -1,0 +1,30 @@
+<?php 
+defined('BASEPATH') or exit('No direct script access allowed');
+require_once APPPATH ."controllers/mods/Mod_User.php";
+require_once APPPATH ."controllers/mods/Mod_Alers.php";
+require_once APPPATH ."controllers/mods/Mod_Auditoria.php";
+require_once APPPATH ."controllers/mods/Mod_Bus.php";
+require_once APPPATH ."controllers/mods/Mod_client.php";
+require_once APPPATH ."controllers/mods/Mod_Cluster.php";
+require_once APPPATH ."controllers/mods/Mod_Control.php";
+require_once APPPATH ."controllers/mods/Mod_Data.php";
+require_once APPPATH ."controllers/mods/Mod_Device.php";
+require_once APPPATH ."controllers/mods/Mod_Devices_Type.php";
+require_once APPPATH ."controllers/mods/Mod_Email.php";
+require_once APPPATH ."controllers/mods/Mod_Export.php";
+require_once APPPATH ."controllers/mods/Mod_Field.php";
+require_once APPPATH ."controllers/mods/Mod_Log.php";
+require_once APPPATH ."controllers/mods/Mod_Pid_control.php";
+require_once APPPATH ."controllers/mods/Mod_Plot.php";
+// require_once APPPATH ."controllers/mods/Mod_Status.php";
+require_once APPPATH ."controllers/mods/Mod_Variable.php";
+require_once APPPATH ."controllers/mods/Mod_Tree.php";
+require_once APPPATH ."controllers/mods/Mod_permission.php";
+require_once APPPATH ."controllers/mods/Mod_views.php";
+require_once APPPATH ."controllers/mods/Mod_Fieldstatus.php";
+require_once APPPATH ."controllers/mods/Mod_permission.php";
+require_once APPPATH ."controllers/mods/Mod_Register.php";
+require_once APPPATH ."controllers/mods/Mod_Datahistorical.php";
+require_once APPPATH ."controllers/mods/Mod_Datastats.php";
+require_once APPPATH ."controllers/mods/Mod_Event.php";
+?>
